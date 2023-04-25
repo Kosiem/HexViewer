@@ -3,18 +3,21 @@
 #include<ctype.h>
 
 int main(int argc, char *argv[]){
-        FILE *plik = fopen(argv[1], "rb");
-        int ilosclinii;
-        char linia[6];
-        int i;
-        int ilosc = 0;
-	int poczatek = 0;
-        printf("Lodaing file: %s\n", argv[1]);
-        while((ilosclinii = fread(linia, 1 , sizeof(linia), plik))){
-		printf("%08x :", poczatek);
-		for(i = 0; i < ilosclinii; i++){
-			if(i < 6 ){
-				printf(" %02x ", (unsigned char)linia[i]);
+    FILE *file = fopen(argv[1], "rb");
+    int numberOfLines;
+	int group;
+	printf("Specify how to group \n");
+	scanf("%d", &group);
+    char *line;
+	line=malloc(sizeof(char) * group);
+    printf("Loading file: %s\n", argv[1]);
+    int i;
+	int start = 0;
+        while((numberOfLines= fread(line, 1 , group, file))){
+		printf("%08x :", start);
+		for(i = 0; i < numberOfLines; i++){
+			if(i < group ){
+				printf(" %02x ", line[i]);
 			} else {
 				printf("  ");
 			
@@ -22,11 +25,11 @@ int main(int argc, char *argv[]){
 		
 		}
 		printf("  ");
-        	for(i = 0; i < 6; i++){
-			if(i < ilosclinii){	
-				printf("%c", isprint(linia[i]) ? linia[i] : '.');
+        	for(i = 0; i < group; i++){
+			if(i < numberOfLines){	
+				printf("%c", isprint(line[i]) ? line[i] : '.');
 			}
-			if(i == 5) {
+			if(i == group) {
 				break;
 			
 			}
@@ -34,11 +37,12 @@ int main(int argc, char *argv[]){
 
 		
 		printf("\n");
-		poczatek = poczatek + 6;
+		start = start + group;
 	}
        
-        printf("Closing file: %s\n", argv[1]);
-        fclose(plik);
-        return 0;
-
+    printf("Closing file: %s\n", argv[1]);
+    fclose(file);
+	free(line);
+	return 0;
+	       
 }
