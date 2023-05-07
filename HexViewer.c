@@ -5,7 +5,7 @@
 int main(int argc, char *argv[]){
     FILE *file = fopen(argv[1], "rb");
     if(file == NULL){
-    	printf("Error occured, while opening file.)
+    	printf("Error occured, while opening file.")
 	return 0;
     } 
     int numberOfLines;
