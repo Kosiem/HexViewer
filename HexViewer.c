@@ -4,12 +4,16 @@
 
 int main(int argc, char *argv[]){
     FILE *file = fopen(argv[1], "rb");
+    if(file == NULL){
+    	printf("Error occured, while opening file.)
+	return 0;
+    } 
     int numberOfLines;
-	int group;
-	printf("Specify how to group \n");
-	scanf("%d", &group);
+    int group;
     char *line;
-	line=malloc(sizeof(char) * group);
+    printf("Specify how to group \n");
+    scanf("%d", &group);
+    line=malloc(sizeof(char) * group);
     printf("Loading file: %s\n", argv[1]);
     int i;
 	int start = 0;
